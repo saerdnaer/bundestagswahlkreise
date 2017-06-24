@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="http://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="http://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-heat.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/leaflet-tilelayer-wmts.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/1998GeometrieWahlkreise14DBT0.js"></script>
+        <script src="data/2002GeometrieWahlkreise15DBT1.js"></script>
+        <script src="data/2005GeometrieWahlkreise16DBT2.js"></script>
+        <script src="data/2009GeometrieWahlkreise17DBT3.js"></script>
+        <script src="data/2013GeometrieWahlkreise18DBT4.js"></script>
+        <script src="data/2017GeometrieWahlkreise19DBT5.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[51.6220998056,8.9448607504],[52.0596788585,9.65502158869]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var bounds_group = new L.featureGroup([]);
+        var basemap0 = L.tileLayer('http://a.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>,<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Mapdata: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        function setBounds() {
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+        function pop_1998GeometrieWahlkreise14DBT0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NR'] !== null ? Autolinker.link(String(feature.properties['WKR_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NAME'] !== null ? Autolinker.link(String(feature.properties['WKR_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NR'] !== null ? Autolinker.link(String(feature.properties['LAND_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NAME'] !== null ? Autolinker.link(String(feature.properties['LAND_NAME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_1998GeometrieWahlkreise14DBT0_0() {
+            return {
+                pane: 'pane_1998GeometrieWahlkreise14DBT0',
+                opacity: 1,
+                color: 'rgba(51,160,44,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_1998GeometrieWahlkreise14DBT0');
+        map.getPane('pane_1998GeometrieWahlkreise14DBT0').style.zIndex = 400;
+        map.getPane('pane_1998GeometrieWahlkreise14DBT0').style['mix-blend-mode'] = 'normal';
+    var layer_1998GeometrieWahlkreise14DBT0 = new L.geoJson(json_1998GeometrieWahlkreise14DBT0, {
+        attribution: '<a href="https://www.bundeswahlleiter.de/bundestagswahlen/1998/wahlkreiseinteilung.html">Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 1998, Wahlkreiskarte fuer die Wahl zum 14. Deutschen Bundestag; Grundlage der Geoinformationen Geobasis-DE / BKG (2016)</a>',
+        pane: 'pane_1998GeometrieWahlkreise14DBT0',
+        onEachFeature: pop_1998GeometrieWahlkreise14DBT0,
+        style: style_1998GeometrieWahlkreise14DBT0_0,
+    });
+        bounds_group.addLayer(layer_1998GeometrieWahlkreise14DBT0);
+        map.addLayer(layer_1998GeometrieWahlkreise14DBT0);
+        function pop_2002GeometrieWahlkreise15DBT1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NR'] !== null ? Autolinker.link(String(feature.properties['WKR_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NAME'] !== null ? Autolinker.link(String(feature.properties['WKR_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NR'] !== null ? Autolinker.link(String(feature.properties['LAND_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NAME'] !== null ? Autolinker.link(String(feature.properties['LAND_NAME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_2002GeometrieWahlkreise15DBT1_0() {
+            return {
+                pane: 'pane_2002GeometrieWahlkreise15DBT1',
+                opacity: 1,
+                color: 'rgba(1,30,255,0.48)',
+                dashArray: '1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_2002GeometrieWahlkreise15DBT1');
+        map.getPane('pane_2002GeometrieWahlkreise15DBT1').style.zIndex = 401;
+        map.getPane('pane_2002GeometrieWahlkreise15DBT1').style['mix-blend-mode'] = 'normal';
+    var layer_2002GeometrieWahlkreise15DBT1 = new L.geoJson(json_2002GeometrieWahlkreise15DBT1, {
+        attribution: '<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2002/wahlkreiseinteilung.html">© Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2002, Wahlkreiskarte für die Wahl zum 15. Deutschen Bundestag; Grundlage der Geoinformationen © Geobasis-DE / BKG (2016)</a>',
+        pane: 'pane_2002GeometrieWahlkreise15DBT1',
+        onEachFeature: pop_2002GeometrieWahlkreise15DBT1,
+        style: style_2002GeometrieWahlkreise15DBT1_0,
+    });
+        bounds_group.addLayer(layer_2002GeometrieWahlkreise15DBT1);
+        map.addLayer(layer_2002GeometrieWahlkreise15DBT1);
+        function pop_2005GeometrieWahlkreise16DBT2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NR'] !== null ? Autolinker.link(String(feature.properties['WKR_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NAME'] !== null ? Autolinker.link(String(feature.properties['WKR_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NAME'] !== null ? Autolinker.link(String(feature.properties['LAND_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NR'] !== null ? Autolinker.link(String(feature.properties['LAND_NR'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_2005GeometrieWahlkreise16DBT2_0() {
+            return {
+                pane: 'pane_2005GeometrieWahlkreise16DBT2',
+                opacity: 1,
+                color: 'rgba(9,255,1,1.0)',
+                dashArray: '10,5,1,5,1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(190,144,52,0.0)',
+            }
+        }
+        map.createPane('pane_2005GeometrieWahlkreise16DBT2');
+        map.getPane('pane_2005GeometrieWahlkreise16DBT2').style.zIndex = 402;
+        map.getPane('pane_2005GeometrieWahlkreise16DBT2').style['mix-blend-mode'] = 'normal';
+    var layer_2005GeometrieWahlkreise16DBT2 = new L.geoJson(json_2005GeometrieWahlkreise16DBT2, {
+        attribution: '<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2005/wahlkreiseinteilung.html">© Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2005, Wahlkreiskarte für die Wahl zum 16. Deutschen Bundestag; Grundlage der Geoinformationen © Geobasis-DE / BKG (2016)</a>',
+        pane: 'pane_2005GeometrieWahlkreise16DBT2',
+        onEachFeature: pop_2005GeometrieWahlkreise16DBT2,
+        style: style_2005GeometrieWahlkreise16DBT2_0,
+    });
+        bounds_group.addLayer(layer_2005GeometrieWahlkreise16DBT2);
+        map.addLayer(layer_2005GeometrieWahlkreise16DBT2);
+        function pop_2009GeometrieWahlkreise17DBT3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AREA'] !== null ? Autolinker.link(String(feature.properties['AREA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PERIMETER'] !== null ? Autolinker.link(String(feature.properties['PERIMETER'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NR'] !== null ? Autolinker.link(String(feature.properties['WKR_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NAME'] !== null ? Autolinker.link(String(feature.properties['WKR_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NR'] !== null ? Autolinker.link(String(feature.properties['LAND_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NAME'] !== null ? Autolinker.link(String(feature.properties['LAND_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FLAG'] !== null ? Autolinker.link(String(feature.properties['FLAG'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_2009GeometrieWahlkreise17DBT3_0() {
+            return {
+                pane: 'pane_2009GeometrieWahlkreise17DBT3',
+                opacity: 1,
+                color: 'rgba(255,192,1,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(90,166,193,0.0)',
+            }
+        }
+        map.createPane('pane_2009GeometrieWahlkreise17DBT3');
+        map.getPane('pane_2009GeometrieWahlkreise17DBT3').style.zIndex = 403;
+        map.getPane('pane_2009GeometrieWahlkreise17DBT3').style['mix-blend-mode'] = 'normal';
+    var layer_2009GeometrieWahlkreise17DBT3 = new L.geoJson(json_2009GeometrieWahlkreise17DBT3, {
+        attribution: '<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2009/wahlkreiseinteilung.html">© Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2008, Wahlkreiskarte für die Wahl zum 17. Deutschen Bundestag; Grundlage der Geoinformationen © Bundesamt für Kartographie und Geodäsie</a>',
+        pane: 'pane_2009GeometrieWahlkreise17DBT3',
+        onEachFeature: pop_2009GeometrieWahlkreise17DBT3,
+        style: style_2009GeometrieWahlkreise17DBT3_0,
+    });
+        bounds_group.addLayer(layer_2009GeometrieWahlkreise17DBT3);
+        map.addLayer(layer_2009GeometrieWahlkreise17DBT3);
+        function pop_2013GeometrieWahlkreise18DBT4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NR'] !== null ? Autolinker.link(String(feature.properties['WKR_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NAME'] !== null ? Autolinker.link(String(feature.properties['WKR_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NR'] !== null ? Autolinker.link(String(feature.properties['LAND_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NAME'] !== null ? Autolinker.link(String(feature.properties['LAND_NAME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_2013GeometrieWahlkreise18DBT4_0() {
+            return {
+                pane: 'pane_2013GeometrieWahlkreise18DBT4',
+                opacity: 1,
+                color: 'rgba(255,1,1,1.0)',
+                dashArray: '1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_2013GeometrieWahlkreise18DBT4');
+        map.getPane('pane_2013GeometrieWahlkreise18DBT4').style.zIndex = 404;
+        map.getPane('pane_2013GeometrieWahlkreise18DBT4').style['mix-blend-mode'] = 'normal';
+    var layer_2013GeometrieWahlkreise18DBT4 = new L.geoJson(json_2013GeometrieWahlkreise18DBT4, {
+        attribution: '<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2013/wahlkreiseinteilung/downloads.html">© Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2012, Wahlkreiskarte für die Wahl zum 18. Deutschen Bundestag; Grundlage der Geoinformationen © Geobasis-DE / BKG (2011)</a>',
+        pane: 'pane_2013GeometrieWahlkreise18DBT4',
+        onEachFeature: pop_2013GeometrieWahlkreise18DBT4,
+        style: style_2013GeometrieWahlkreise18DBT4_0,
+    });
+        bounds_group.addLayer(layer_2013GeometrieWahlkreise18DBT4);
+        map.addLayer(layer_2013GeometrieWahlkreise18DBT4);
+        function pop_2017GeometrieWahlkreise19DBT5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NR'] !== null ? Autolinker.link(String(feature.properties['WKR_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NR'] !== null ? Autolinker.link(String(feature.properties['LAND_NR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAND_NAME'] !== null ? Autolinker.link(String(feature.properties['LAND_NAME'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WKR_NAME'] !== null ? Autolinker.link(String(feature.properties['WKR_NAME'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_2017GeometrieWahlkreise19DBT5_0() {
+            return {
+                pane: 'pane_2017GeometrieWahlkreise19DBT5',
+                opacity: 1,
+                color: 'rgba(255,1,1,1.0)',
+                dashArray: '1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_2017GeometrieWahlkreise19DBT5');
+        map.getPane('pane_2017GeometrieWahlkreise19DBT5').style.zIndex = 405;
+        map.getPane('pane_2017GeometrieWahlkreise19DBT5').style['mix-blend-mode'] = 'normal';
+    var layer_2017GeometrieWahlkreise19DBT5 = new L.geoJson(json_2017GeometrieWahlkreise19DBT5, {
+        attribution: '<a href="https://www.bundeswahlleiter.de/bundestagswahlen/2017/wahlkreiseinteilung/downloads.html">© Der Bundeswahlleiter, Statistisches Bundesamt, Wiesbaden 2016, Wahlkreiskarte für die Wahl zum 19. Deutschen Bundestag; Grundlage der Geoinformationen © Geobasis-DE / BKG (2016)</a>',
+        pane: 'pane_2017GeometrieWahlkreise19DBT5',
+        onEachFeature: pop_2017GeometrieWahlkreise19DBT5,
+        style: style_2017GeometrieWahlkreise19DBT5_0,
+    });
+        bounds_group.addLayer(layer_2017GeometrieWahlkreise19DBT5);
+        map.addLayer(layer_2017GeometrieWahlkreise19DBT5);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/2017GeometrieWahlkreise19DBT5.png" /> 2017 Geometrie_Wahlkreise_19DBT': layer_2017GeometrieWahlkreise19DBT5,'<img src="legend/2013GeometrieWahlkreise18DBT4.png" /> 2013 Geometrie_Wahlkreise_18DBT': layer_2013GeometrieWahlkreise18DBT4,'<img src="legend/2009GeometrieWahlkreise17DBT3.png" /> 2009 Geometrie_Wahlkreise_17DBT': layer_2009GeometrieWahlkreise17DBT3,'<img src="legend/2005GeometrieWahlkreise16DBT2.png" /> 2005 Geometrie_Wahlkreise_16DBT': layer_2005GeometrieWahlkreise16DBT2,'<img src="legend/2002GeometrieWahlkreise15DBT1.png" /> 2002 Geometrie_Wahlkreise_15DBT': layer_2002GeometrieWahlkreise15DBT1,'<img src="legend/1998GeometrieWahlkreise14DBT0.png" /> 1998 Geometrie_Wahlkreise_14DBT': layer_1998GeometrieWahlkreise14DBT0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
