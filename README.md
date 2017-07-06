@@ -2,7 +2,7 @@
 
 Karte: https://saerdnaer.github.io/bundestagswahlkreise/
 
-Daten als GeoJSON: [data/](https://github.com/saerdnaer/bundestagswahlkreise/tree/master/data)
+Daten als GeoJSON: https://github.com/okfde/wahldaten/tree/master/geometrien/wahlkreise/historisch
 
 Datenquellen:
 * 2017: https://www.bundeswahlleiter.de/bundestagswahlen/2017/wahlkreiseinteilung/downloads.html
